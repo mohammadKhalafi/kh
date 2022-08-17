@@ -25,12 +25,14 @@ namespace ConsoleApp1
             }
         }
         
+        ///intersect two enumerables in order n ^ 2
         [Benchmark]
         public void ON2()
         {
             _hashSet.Where(x => _list.Contains(x)).ToList();
         }
         
+        //intersect two enumerables in order n
         [Benchmark]
         public void ON()
         {

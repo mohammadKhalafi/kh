@@ -1,0 +1,40 @@
+using BenchmarkDotNet.Attributes;
+
+namespace ConsoleApp1
+{
+    [MemoryDiagnoser]
+    public class C
+    {
+        private readonly List<string> _list;
+        private readonly HashSet<string> _hashSet;
+
+        public C()
+        {
+            _list = new List<string>();
+            
+            foreach(var i in Enumerable.Range(0, 100000))
+            {
+                _list.Add(i.ToString());
+            }
+            
+            _hashSet = new HashSet<string>();
+            
+            foreach(var i in Enumerable.Range(0, 100000))
+            {
+                _hashSet.Add(i.ToString());
+            }
+        }
+        
+        [Benchmark]
+        public void ON2()
+        {
+            _hashSet.Where(x => _list.Contains(x)).ToList();
+        }
+        
+        [Benchmark]
+        public void ON()
+        {
+            _list.Where(x => _hashSet.Contains(x)).ToList();
+        }
+    }
+}
